@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vollmed
+  labels:
+    app: vollmed
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vollmed
+  template:
+    metadata:
+      labels:
+        app: vollmed
+    spec:
+      containers:
+      - name: vollmedAPI
+        image: silvats/vollmed:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
