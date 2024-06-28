@@ -26,3 +26,16 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "1000m"
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: dados
+              key: DB_HOST
+              
+        - name: DB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: DB_DATABASE
+              key: DB_DATABASE
+        
