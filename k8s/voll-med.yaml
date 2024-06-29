@@ -36,3 +36,9 @@ spec:
             secretKeyRef:
               name: senhas
               key: DB_PASSWORD
+        livenessProbe:
+          httpGet:
+            path: /paciente
+            port: 3000
+          initialDelaySeconds: 20
+          periodSeconds: 3      
