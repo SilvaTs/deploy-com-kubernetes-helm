@@ -26,16 +26,25 @@ spec:
             configMapKeyRef:
               name: dados
               key: DB_HOST
+
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: dados
+              key: REDIS_HOST
+
         - name: DB_DATABASE
           valueFrom:
             configMapKeyRef:
               name: dados
               key: DB_DATABASE
+
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: senhas
               key: DB_PASSWORD
+
         livenessProbe:
           httpGet:
             path: /paciente
