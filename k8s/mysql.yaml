@@ -33,6 +33,7 @@ spec:
           secretKeyRef:
             name: senhas          
             key: DB_PASSWORD 
+            
         volumeMounts:
         - name: mysql-ps
           mountPath: /var/lib/mysql
