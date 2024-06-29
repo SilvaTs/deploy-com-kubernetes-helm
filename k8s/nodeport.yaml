@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: nodeport-api
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
-    app.kubernetes.io/name: vollmed
+    app: vollmed
   ports:
     - port: 3000     
       targetPort: 3000     
-      nodePort: 30007
+      

@@ -53,3 +53,36 @@ spec:
       - name: mysql-ps
         persistentVolumeClaim:
           claimName: volume-mysql
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-mysql
+spec:
+  schedule: "0 3 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: mysqldump
+            image: silvats/mysqldump:v1
+            env:         
+            - name: MYSQL_ENV_DB_HOST                                       
+              valueFrom:
+                configMapKeyRef:
+                  name: dados           
+                  key: DB_HOST 
+
+            - name: MYSQL_ENV_DB_PASS                                         
+              valueFrom:
+                secretKeyRef:
+                  name: senhas           
+                  key: DB_PASSWORD 
+            
+            - name: MYSQL_ENV_DB_USER                                         # from the key name in the ConfigMap.
+              valueFrom:
+                secretKeyRef:
+                  name: senhas           
+                  key: MYSQL_ENV_DB_USER 
+          restartPolicy: OnFailure
