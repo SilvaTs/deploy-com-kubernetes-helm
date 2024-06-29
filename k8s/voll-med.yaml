@@ -19,13 +19,7 @@ spec:
         image: silvats/vollmed:latest
         ports:
         - containerPort: 3000
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "500m"
-          limits:
-            memory: "512Mi"
-            cpu: "1000m"
+        
         env:
         - name: DB_HOST
           valueFrom:

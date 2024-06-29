@@ -1,3 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  ports:
+  - port: 3306
+    name: mysql
+  clusterIP: None
+  selector:
+    app: mysql
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -5,14 +19,14 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: mysql 
+      app: mysql
   serviceName: "mysql"
-  replicas: 1 
-  minReadySeconds: 10 
+  replicas: 1
+  minReadySeconds: 10
   template:
     metadata:
       labels:
-        app: mysql 
+        app: mysql
     spec:
       terminationGracePeriodSeconds: 10
       containers:
@@ -21,24 +35,21 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
-      env:
-      - name: MYSQL_DATABASE                                     
-        valueFrom:
-          configMapKeyRef:
-            name: dados           
-            key: DB_DATABASE 
-
-      - name: MYSQL_ROOT_PASSWORD                                      
-        valueFrom:
-          secretKeyRef:
-            name: senhas          
-            key: DB_PASSWORD 
-            
-        volumeMounts:
+        env:  
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: dados
+                key: DB_DATABASE
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: senhas
+                key: DB_PASSWORD
+        volumeMounts:  
         - name: mysql-ps
           mountPath: /var/lib/mysql
       volumes:
       - name: mysql-ps
         persistentVolumeClaim:
-          claimName: volume-mysql 
-        
+          claimName: volume-mysql
